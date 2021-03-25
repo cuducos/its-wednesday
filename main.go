@@ -46,22 +46,43 @@ func getClient() (*twitter.Client, error) {
 	return twitter.NewClient(config.Client(oauth1.NoContext, token)), nil
 }
 
-func isWednesday() bool {
-	return time.Now().Weekday() == time.Wednesday
-}
-
 func shouldTweet() bool {
+	c := loadCache()
+	if c.now.Weekday() != time.Wednesday {
+		return false
+	}
+	if c.tweetedToday() {
+		return false
+	}
+	if c.now.Hour() >= 18 && c.triedThisEvening() {
+		return false
+	}
+	if c.now.Hour() >= 12 && c.triedThisAfternoon() {
+		return false
+	}
+	if c.now.Hour() >= 8 && c.triedThisMorning() {
+		return false
+	}
+
 	r := bufio.NewReader(os.Stdin)
-	fmt.Println("It's Wednesday. Should we tweet the meme? [y/n]")
+	fmt.Print("It's Wednesday. Should we tweet the meme? [y/n] ")
 	i, err := r.ReadString('\n')
 	if err != nil {
 		os.Exit(1)
 	}
-	return i == "y\n"
+
+	c.lastAttempt = c.now
+	t := i == "y\n"
+	if t {
+		c.lastTweet = c.now
+	}
+
+	c.write()
+	return t
 }
 
 func main() {
-	if !isWednesday() || !shouldTweet() {
+	if !shouldTweet() {
 		return
 	}
 

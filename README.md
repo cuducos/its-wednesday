@@ -1,9 +1,10 @@
 # Captain, it's Wednesday!
 
-This tiny script automated that reminds me when it's Wednseday and asks me if I want to [tweet](https://twitter.com/cuducos/status/1374829624618811395) this meme:
+This tiny script automated that reminds me when it's Wednesday and asks me if I want to [tweet](https://twitter.com/cuducos/status/1374829624618811395) this meme:
 
 ![Tintin & Captain Haddock](img.jpg)
 
+It only asks, **at maximum**, once in the morning, once in the afternoon and once on the evening — and it stops asking when it has already tweeted in any given Wednesday.
 
 ## Requirements
 
@@ -14,15 +15,17 @@ This tiny script automated that reminds me when it's Wednseday and asks me if I 
 
 Once [this PR](https://github.com/dghubble/go-twitter/pull/148) is merged, everything will be way easier.
 
+Also I have not tested in Windows.
+
 ## Basic usage
 
-1. Create an app and get your API keys from [Twitter's Developer platform]([https://developer.twitter.com/](https://developer.twitter.com/))
+1. Create an application and get your API keys from [Twitter's Developer platform]([https://developer.twitter.com/](https://developer.twitter.com/))
 1. Create environment variables with the keys:
     * `WEDNESDAY_CONSUMER_KEY`
     * `WEDNESDAY_CONSUMER_SECRET`
     * `WEDNESDAY_ACCESS_TOKEN`
     * `WEDNESDAY_ACCESS_TOKEN_SECRET`
-1. Run with `go run main.go`
+1. Run with `go run main.go cache.go`
 
 ## How I use it (opinionated)
 
