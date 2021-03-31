@@ -64,6 +64,12 @@ func shouldTweet() bool {
 		return false
 	}
 
+	// timeout
+	go func() {
+		time.Sleep(5 * time.Second)
+		os.Exit(0)
+	}()
+
 	r := bufio.NewReader(os.Stdin)
 	fmt.Print("It's Wednesday. Should we tweet the meme? [y/n] ")
 	i, err := r.ReadString('\n')
@@ -102,4 +108,5 @@ func main() {
 	}
 
 	fmt.Printf("https://twitter.com/%s/status/%d\n", t.User.ScreenName, t.ID)
+	os.Exit(0)
 }
